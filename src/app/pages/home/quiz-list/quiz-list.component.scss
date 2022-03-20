@@ -1,0 +1,12 @@
+.quiz-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (min-width: 1000px) {
+  app-wrapper {
+    max-width: 1000px;
+    display: block;
+    margin-inline: auto;
+  }
+}

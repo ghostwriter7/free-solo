@@ -11,7 +11,8 @@ import { WrapperComponent } from './wrapper/wrapper.component';
     WrapperComponent
   ],
   exports: [
-    PageHeaderComponent
+    PageHeaderComponent,
+    WrapperComponent
   ],
   imports: [
     CommonModule
