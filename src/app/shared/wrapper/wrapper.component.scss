@@ -1,12 +1,12 @@
 .wrapper {
   max-width: 1200px;
   margin-inline: auto;
-  background-color: var(--primary);
+  background-color: var(--bg-primary);
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
   padding: 2rem;
-  outline: 3px dashed var(--neutral-light);
+  outline: 3px dashed var(--text-primary);
   outline-offset: -1.5rem;
 
   &::before {
@@ -16,7 +16,7 @@
     height: 100%;
     inset: 0;
     pointer-events: none;
-    outline: 3px dashed var(--neutral-light);
+    outline: 3px dashed var(--text-primary);
     outline-offset: calc(-1.5rem - 5px);
   }
 }
