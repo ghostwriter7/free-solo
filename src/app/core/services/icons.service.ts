@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  faBars, faBook,
+  faBars, faBook, faBookOpen,
   faEllipsisV,
   faFistRaised,
   faGhost,
@@ -14,26 +14,16 @@ import {
   providedIn: 'root'
 })
 export class IconsService {
-  public bars = faBars;
-  public times = faTimes;
-  public sun = faSun;
-  public paw = faPaw;
-  public laptop = faLaptop;
-  public hand = faFistRaised;
-  public ghost = faGhost;
-  public balls = faEllipsisV;
-  public book = faBook;
-
   private icons: {[key: string]: any} = {
-    bars: this.bars,
-    times: this.times,
-    sun: this.sun,
-    paw: this.paw,
-    laptop: this.laptop,
-    hand: this.hand,
-    ghost: this.ghost,
-    balls: this.balls,
-    book: this.book
+    bars: faBars,
+    times: faTimes,
+    sun: faSun,
+    paw: faPaw,
+    laptop: faLaptop,
+    hand: faFistRaised,
+    ghost: faGhost,
+    balls: faEllipsisV,
+    book: faBookOpen
   }
 
   public getIcon(icon: string): any {

@@ -4,7 +4,7 @@
     <span
       (click)="onToggleMenu()"
       class="navbar__toggle">
-      <fa-icon [icon]="isMenuActive ? iconsService.times : iconsService.bars"></fa-icon>
+      <fa-icon [icon]="isMenuActive ? iconsService.getIcon('times') : iconsService.getIcon('bars')"></fa-icon>
     </span>
     <ul
       [ngClass]="{ 'active': isMenuActive }"
@@ -24,7 +24,7 @@
       <label
         class="navbar__theme-toggle" for="theme-toggle">
         <input type="checkbox" id="theme-toggle" checked>
-        <fa-icon (click)="onToggleTheme()" [icon]="iconsService.sun"></fa-icon>
+        <fa-icon (click)="onToggleTheme()" [icon]="iconsService.getIcon('sun')"></fa-icon>
         <span (click)="onToggleTheme()"></span>
       </label>
     </ul>
