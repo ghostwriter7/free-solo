@@ -1,6 +1,7 @@
 .quiz-wrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 @media screen and (min-width: 1000px) {

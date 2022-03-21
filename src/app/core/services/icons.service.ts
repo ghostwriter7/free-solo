@@ -5,7 +5,7 @@ import {
   faFistRaised,
   faGhost,
   faLaptop,
-  faPaw,
+  faPaw, faQuestion,
   faSun,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +23,8 @@ export class IconsService {
     hand: faFistRaised,
     ghost: faGhost,
     balls: faEllipsisV,
-    book: faBookOpen
+    book: faBookOpen,
+    question: faQuestion
   }
 
   public getIcon(icon: string): any {
