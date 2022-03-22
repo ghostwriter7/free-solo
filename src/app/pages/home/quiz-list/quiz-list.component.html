@@ -1,7 +1,7 @@
 <app-wrapper>
   <div class="quiz-wrapper">
       <app-quiz-item
-        *ngFor="let item of quizItems"
+        *ngFor="let item of quizItems; let i = index"
         [icon]="item.icon"
       ></app-quiz-item>
   </div>

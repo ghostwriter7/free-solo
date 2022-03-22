@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-quiz-list',
   templateUrl: './quiz-list.component.html',
   styleUrls: ['./quiz-list.component.scss']
 })
-export class QuizListComponent implements OnInit {
+export class QuizListComponent implements OnInit, AfterViewInit {
   public quizItems: { icon: string }[] = [
     { icon: 'laptop' },
     { icon: 'balls' },
@@ -20,9 +20,11 @@ export class QuizListComponent implements OnInit {
     { icon: 'ghost' },
     { icon: 'paw' }
   ];
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+
+  ngAfterViewInit() {}
 
 }
