@@ -1,4 +1,15 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
+import { PlaceholderDirective } from '../../../core/directives/placeholder.directive';
+import { ModalComponent } from '../../../shared/modal/modal.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-quiz-list',
@@ -6,6 +17,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   styleUrls: ['./quiz-list.component.scss']
 })
 export class QuizListComponent implements OnInit, AfterViewInit {
+  @ViewChild(PlaceholderDirective, { static: true }) host!: PlaceholderDirective;
+
   public quizItems: { icon: string }[] = [
     { icon: 'laptop' },
     { icon: 'balls' },
@@ -21,10 +34,20 @@ export class QuizListComponent implements OnInit, AfterViewInit {
     { icon: 'paw' }
   ];
 
-  constructor() { }
+  constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {}
 
+  private createModal(title: string, text: string): void {
+    const modalFactory = this._componentFactoryResolver.resolveComponentFactory(ModalComponent);
+    this.host.viewContainerRef.clear();
+    const component = this.host.viewContainerRef.createComponent(modalFactory);
+    component.instance.title = title;
+    component.instance.content.nativeElement.innerText = text;
+    component.instance.close.pipe(take(1)).subscribe({
+      next: () => this.host.viewContainerRef.clear()
+    });
+  }
 }

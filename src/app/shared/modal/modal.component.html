@@ -1,13 +1,13 @@
-<div *ngIf="isVisible" class="overlay">
+<div class="overlay">
   <div class="modal">
     <div class="modal__header">
       <span class="modal__title">{{ title }}</span>
-      <button (click)="isVisible = !isVisible" class="modal__close">
+      <button (click)="onClose()" class="modal__close">
         <fa-icon [icon]="iconsService.getIcon('times')"></fa-icon>
       </button>
     </div>
-    <div class="modal__body">
-      <ng-content></ng-content>
+    <div class="modal__body" #content>
+
     </div>
   </div>
 </div>

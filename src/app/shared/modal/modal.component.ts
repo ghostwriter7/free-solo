@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IconsService } from '../../core/services';
 
 @Component({
@@ -7,12 +7,16 @@ import { IconsService } from '../../core/services';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
+  @ViewChild('content', { static: true }) content!: ElementRef;
   @Input() title!: string;
-  public isVisible = true;
+  @Output() close = new EventEmitter<void>();
 
   constructor(public iconsService: IconsService) { }
 
   ngOnInit(): void {
   }
 
+  public onClose(): void {
+    this.close.emit();
+  }
 }
