@@ -36,9 +36,15 @@ export class QuizListComponent implements OnInit, AfterViewInit {
 
   constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.shufflePuzzles();
+  }
 
   ngAfterViewInit() {}
+
+  private shufflePuzzles(): void {
+    this.quizItems.sort((a, b) => 0.5 - Math.random());
+  }
 
   private createModal(title: string, text: string): void {
     const modalFactory = this._componentFactoryResolver.resolveComponentFactory(ModalComponent);
