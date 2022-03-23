@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;400;600&display=swap');
 
 :root {
+  --bg-body: #1a1935;
   --bg-primary: rgb(2, 1, 34);
   //--bg-secondary: rgb(255, 82, 27);
   --bg-secondary: rgb(63, 78, 111);
@@ -12,4 +13,5 @@ body {
   font-family: 'Roboto Mono', sans-serif;
   margin: 0;
   overflow-x: hidden;
+  background-color: var(--bg-body);
 }
