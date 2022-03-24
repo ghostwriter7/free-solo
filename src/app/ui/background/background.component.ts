@@ -5,6 +5,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader';
 import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
+import { GUI } from 'dat.gui';
+import { ThemeService } from '../../core/services';
 
 @Component({
   selector: 'app-background',
@@ -34,12 +36,19 @@ export class BackgroundComponent implements OnInit {
     this._renderer.domElement.style.top = window.scrollY + 'px';
   }
 
+  constructor(private _themeService: ThemeService) {}
+
   ngOnInit(): void {
     this.init();
     this.initPostProcessing();
     this.animate();
     this.renderCubes();
     this.animate();
+    this.initGUI();
+
+    this._themeService.canvasBackground$.subscribe((color) => {
+      this._scene.background = new THREE.Color(color);
+    });
   }
 
   private renderCubes(): void {
@@ -105,5 +114,26 @@ export class BackgroundComponent implements OnInit {
     verticalBlur.uniforms['v'].value = 1 / innerHeight;
     verticalBlur.renderToScreen = true;
     this._composer.addPass(verticalBlur);
+  }
+
+  private initGUI(): void {
+    const palette = {
+      'bg-primary': [2, 1, 34],
+      'bg-secondary': [63, 78, 111],
+      'bg-body': '#1a1935',
+      'text-primary': [255,255,255],
+      'text-secondary': [0,0,0]
+    }
+    const gui = new GUI({ width: 500, });
+    gui.domElement.style.fontSize = '1.2rem';
+    gui.addColor(palette, 'bg-primary').onChange(val => this.setColorOnRoot('--bg-primary', val));
+    gui.addColor(palette, 'bg-secondary').onChange(val => this.setColorOnRoot('--bg-secondary', val));
+    gui.addColor(palette, 'bg-body').onChange(val => this._scene.background = new THREE.Color(val));
+    gui.addColor(palette, 'text-primary').onChange(val => this.setColorOnRoot('--text-primary', val));
+    gui.addColor(palette, 'text-secondary').onChange(val => this.setColorOnRoot('--text-secondary', val));
+  }
+
+  private setColorOnRoot(prop: string, val: any): void {
+    document.documentElement.style.setProperty(prop, `rgb(${val})`);
   }
 }

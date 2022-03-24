@@ -3,10 +3,10 @@ import { Theme } from '../interfaces';
 export const light: Theme = {
   name: 'light',
   properties: {
-    '--bg-body': '#1a1935',
-    '--bg-primary': 'rgb(187,187,187)',
-    '--bg-secondary': 'rgb(255, 82, 27)',
-    '--text-primary': 'rgb(2, 1, 34)',
-    '--text-secondary': 'rgb(0,0,0)'
+    '--bg-body': '#52525c',
+    '--bg-primary': 'rgb(115, 111, 120)',
+    '--bg-secondary': 'rgb(110, 73, 90)',
+    '--text-primary': 'rgb(222, 212, 200)',
+    '--text-secondary': 'rgb(89, 52, 52)'
   }
 };
