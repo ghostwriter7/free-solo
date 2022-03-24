@@ -1,5 +1,10 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader';
+import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 
 @Component({
   selector: 'app-background',
@@ -11,10 +16,13 @@ export class BackgroundComponent implements OnInit {
   private _renderer!: THREE.WebGLRenderer;
   private _scene!: THREE.Scene;
   private _camera!: THREE.PerspectiveCamera;
-  private _cube!: THREE.Mesh;
-  private _cubes!: THREE.Mesh[];
+  private _cubes: THREE.Mesh[] = [];
   private _material!: THREE.MeshBasicMaterial;
-  constructor() { }
+  private _composer!: EffectComposer;
+  private _clock!: THREE.Clock;
+  private readonly _numberOfCubes = innerWidth / 50;
+  private readonly _horizontalRange = [innerWidth / 10, -innerWidth / 10];
+  private readonly _verticalRange = [innerWidth / 20, -innerWidth / 20];
 
   @HostListener('window:resize') onWindowResize(): void {
     this._renderer.setSize(innerWidth, innerHeight);
@@ -28,34 +36,36 @@ export class BackgroundComponent implements OnInit {
 
   ngOnInit(): void {
     this.init();
+    this.initPostProcessing();
     this.animate();
-     const geo = new THREE.BoxGeometry(10, 10, 10);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
-    this._cube = new THREE.Mesh(geo, material);
-    const smallGeo = new THREE.BoxGeometry(9, 9, 9);
-    const smallCube = new THREE.Mesh(smallGeo, material);
-    this._cube.add(smallCube);
-
-    this._scene.add(this._cube);
-
-    // const animate = () => {
-    //   requestAnimationFrame( animate );
-    //
-    //   this._cube.rotation.x += 0.01;
-    //   this._cube.rotation.y += 0.01;
-    //
-    //   this._renderer.render( this._scene, this._camera );
-    // };
-
+    this.renderCubes();
     this.animate();
   }
 
-  private createCubes(): void {
-    const geo = new THREE.BoxGeometry(this.getRandomNumb(), this.getRandomNumb(), this.getRandomNumb());
-
+  private renderCubes(): void {
+    for (let i = 0; i < this._numberOfCubes; i++) {
+      this.createOctahedron();
+    }
   }
 
-  private getRandomNumb(max = 20, min = 10): number {
+  private createOctahedron(): void {
+    let radius = this.getRandomNumb(20, 5);
+    const geo = new THREE.OctahedronGeometry(radius);
+    const mesh = new THREE.Mesh(geo, this._material);
+    mesh.position.x = this.getRandomNumb(this._horizontalRange[0], this._horizontalRange[1]);
+    mesh.position.y = this.getRandomNumb(this._verticalRange[0], this._verticalRange[1]);
+
+    radius -= 3;
+
+    const smallGeo = new THREE.OctahedronGeometry(radius);
+    const smallMesh = new THREE.Mesh(smallGeo, this._material);
+
+    mesh.add(smallMesh);
+    this._cubes.push(mesh);
+    this._scene.add(mesh);
+  }
+
+  private getRandomNumb(max: number, min: number): number {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
@@ -65,19 +75,35 @@ export class BackgroundComponent implements OnInit {
     this._scene = new THREE.Scene();
     this._scene.background = new THREE.Color(0x1a1935);
     this._camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
-    this._camera.position.z = 45;
-    this._camera.position.x = 45;
+    this._camera.position.z = 100;
     this._material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
+    this._clock = new THREE.Clock();
   }
 
   private animate(): void {
     requestAnimationFrame(this.animate.bind(this));
 
-    this._renderer.render(this._scene, this._camera);
+    const delta = this._clock.getDelta();
+
+    this._cubes.forEach(cube => {
+      cube.rotation.x += 0.001;
+      cube.rotation.y += 0.001;
+    });
+
+    this._composer.render(delta)
   }
 
+  private initPostProcessing(): void {
+    this._composer = new EffectComposer(this._renderer);
+    this._composer.addPass(new RenderPass(this._scene,this._camera));
 
+    const horizontalBlur = new ShaderPass(HorizontalBlurShader);
+    horizontalBlur.uniforms['h'].value = 1 / innerWidth;
+    this._composer.addPass(horizontalBlur);
 
-
-
+    const verticalBlur = new ShaderPass(VerticalBlurShader);
+    verticalBlur.uniforms['v'].value = 1 / innerHeight;
+    verticalBlur.renderToScreen = true;
+    this._composer.addPass(verticalBlur);
+  }
 }
