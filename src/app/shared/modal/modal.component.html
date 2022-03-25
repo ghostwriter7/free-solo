@@ -1,5 +1,5 @@
 <div class="overlay">
-  <div class="modal">
+  <div class="modal" [@slideAway]="isGone ? 'gone' : ''">
     <div class="modal__header">
       <span class="modal__title">{{ title }}</span>
       <button (click)="onClose()" class="modal__close">

@@ -14,7 +14,7 @@ import QUIZ_DATA from '../core/data/quizData';
 export class QuizListComponent implements OnInit {
   @ViewChild(PlaceholderDirective, { static: true }) host!: PlaceholderDirective;
 
-  public quizItems = [...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i })), ...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i + 5}))];
+  public quizItems = [...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i })), ...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i + 6}))];
   public isBoardActive = true;
   public isSuccess = false;
   public isWrong = false;
