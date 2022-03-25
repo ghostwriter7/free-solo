@@ -10,6 +10,7 @@
   position: relative;
   transition: transform 0.8s;
   transform-style: preserve-3d;
+  cursor: pointer;
 
   &::before {
     content: '';
@@ -33,6 +34,10 @@
     backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+
+    &:hover {
+      background-color: var(--color-accent);
+    }
 
     &::before {
       position: absolute;
@@ -59,3 +64,82 @@
     margin: 5px;
   }
 }
+
+.wrong {
+  animation: wrong 1s ease-in-out;
+}
+
+.success {
+  animation: success 1s ease-in-out;
+}
+
+@keyframes wrong {
+  0%,
+  100% {
+    -webkit-transform: translateX(0%) rotateY(180deg);
+    transform: translateX(0%) rotateY(180deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    opacity: 1;
+  }
+  15% {
+    -webkit-transform: translateX(-30px) rotateY(180deg) rotateX(-6deg);
+    background-color: #a52727;
+    opacity: 0.4;
+    transform: translateX(-30px) rotateY(180deg) rotateX(-6deg);
+  }
+  30% {
+    -webkit-transform: translateX(15px) rotateY(180deg) rotateX(6deg);
+    opacity: 0.7;
+    transform: translateX(15px) rotateY(180deg) rotateX(6deg);
+  }
+  45% {
+    -webkit-transform: translateX(-15px) rotateY(180deg) rotateX(-3.6deg);
+    opacity: 0.4;
+    transform: translateX(-15px) rotateY(180deg) rotateX(-3.6deg);
+  }
+  60% {
+    -webkit-transform: translateX(9px) rotateY(180deg) rotateX(2.4deg);
+    opacity: 0.7;
+    transform: translateX(9px) rotateY(180deg) rotateX(2.4deg);
+  }
+  75% {
+    -webkit-transform: translateX(-6px) rotateY(180deg) rotateX(-1.2deg);
+    opacity: 0.4;
+    transform: translateX(-6px) rotateY(180deg) rotateX(-1.2deg);
+  }
+}
+
+@keyframes success {
+  0% {
+    transform: scale3d(1, 1, 1) rotateY(180deg);
+    background-color: #2f5e2f;
+    opacity: 1;
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1) rotateY(180deg);
+    opacity: .5;
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1) rotateY(180deg);
+    opacity: .7;
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1) rotateY(180deg);
+    opacity: .5;
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1) rotateY(180deg);
+    opacity: .7;
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1) rotateY(180deg);
+    opacity: .5;
+  }
+  100% {
+    transform: scale3d(1, 1, 1) rotateY(180deg);
+    opacity: 1;
+  }
+}
+
+

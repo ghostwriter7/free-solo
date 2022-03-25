@@ -1,8 +1,13 @@
 <app-wrapper>
-  <div class="quiz-wrapper">
+  <div class="quiz-wrapper" [ngStyle]="{ pointerEvents: isBoardActive ? 'auto' : 'none'}">
       <app-quiz-item
-        *ngFor="let item of quizItems; let i = index"
-        [icon]="item.icon"
+        #puzzleEl
+        (click)="onClick(puzzle, puzzleEl)"
+        [ngClass]="{ 'disabled': firstSelectedPuzzle?.puzzle === puzzle || !puzzle.isActive}"
+        [isWrong]="(firstSelectedPuzzle?.puzzle === puzzle || secondSelectedPuzzle?.puzzle === puzzle) && isWrong"
+        [isSuccess]="(firstSelectedPuzzle?.puzzle === puzzle || secondSelectedPuzzle?.puzzle === puzzle) && isSuccess"
+        *ngFor="let puzzle of quizItems; let i = index"
+        [icon]="puzzle.icon"
       ></app-quiz-item>
   </div>
 </app-wrapper>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { IconsService } from '../../../core/services';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -16,6 +16,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class QuizItemComponent implements OnInit {
   @Input() icon!: string;
+  @Input() isSuccess = false;
+  @Input() isWrong = false;
   public isHidden = true;
 
   constructor(public iconsService: IconsService) { }
@@ -23,7 +25,7 @@ export class QuizItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onToggle(): void {
+  public toggle(): void {
     this.isHidden = !this.isHidden;
   }
 

@@ -11,3 +11,8 @@
     margin-inline: auto;
   }
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: .9;
+}

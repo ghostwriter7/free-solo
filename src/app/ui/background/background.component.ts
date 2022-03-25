@@ -44,7 +44,7 @@ export class BackgroundComponent implements OnInit {
     this.animate();
     this.renderCubes();
     this.animate();
-    this.initGUI();
+    // this.initGUI();
 
     this._themeService.canvasBackground$.subscribe((color) => {
       this._scene.background = new THREE.Color(color);
