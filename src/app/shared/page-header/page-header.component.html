@@ -1,6 +1,8 @@
 <app-wrapper>
   <div class="page-header">
     <div class="page-header__title">{{ title }}</div>
-    <div class="page-header__content" [innerHTML]="content"></div>
+    <div class="page-header__content">
+      <ng-content></ng-content>
+    </div>
   </div>
 </app-wrapper>
