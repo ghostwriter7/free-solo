@@ -50,8 +50,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap-grid.css",
-              "node_modules/bootstrap/dist/css/bootstrap-utilities.css",
               "src/styles.scss"
             ],
             "scripts": []

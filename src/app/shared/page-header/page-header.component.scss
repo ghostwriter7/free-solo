@@ -1,5 +1,10 @@
 $breakpoint: '500px';
 
+:host {
+  display: block;
+  margin-bottom: 2rem;
+}
+
 .page-header {
   padding: 1rem;
   display: flex;
