@@ -23,7 +23,7 @@ export class NavComponent implements OnInit {
 
   constructor(
     public iconsService: IconsService,
-    public _themeService: ThemeService,
+    public themeService: ThemeService,
     private _renderer2: Renderer2,
   ) {}
 
@@ -44,6 +44,6 @@ export class NavComponent implements OnInit {
   }
 
   public onToggleTheme(): void {
-    this._themeService.toggleTheme();
+    this.themeService.toggleTheme();
   }
 }

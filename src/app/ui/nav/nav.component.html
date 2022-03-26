@@ -22,8 +22,9 @@
         </a>
       </li>
       <label
+        *ngIf="themeService.themeLoaded$ | async as theme"
         class="navbar__theme-toggle" for="theme-toggle">
-        <input type="checkbox" id="theme-toggle" checked>
+        <input type="checkbox" id="theme-toggle" [checked]="theme === 'light'">
         <fa-icon (click)="onToggleTheme()" [icon]="iconsService.getIcon('sun')"></fa-icon>
         <span (click)="onToggleTheme()"></span>
       </label>

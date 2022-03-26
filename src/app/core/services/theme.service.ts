@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { Theme } from '../interfaces';
 import { dark, light } from '../themes';
 import { StorageService } from './storage.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
-  public _active: Theme = dark;
+  private _active: Theme = dark;
   public canvasBackground$ = new BehaviorSubject<string>(this._active.properties['--bg-body']);
+  public themeLoaded$ = new ReplaySubject<string>(1);
 
   constructor(private _storageService: StorageService) { }
 
@@ -26,6 +27,7 @@ export class ThemeService {
       this._active = JSON.parse(favoriteTheme) === 'light' ? light : dark;
       this.setActiveTheme();
     }
+    this.themeLoaded$.next(this._active.name);
   }
 
   private saveTheme(): void {
