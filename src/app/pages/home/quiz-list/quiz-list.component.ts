@@ -17,6 +17,9 @@ export class QuizListComponent implements OnInit {
   @ViewChild('answer', { read: TemplateRef }) answer!: TemplateRef<any>;
 
   @HostListener('click') centerPuzzleBoard() {
+    if (!this.isBoardActive) {
+      return;
+    }
     this._scrollManager.scrollToAnchor('puzzles');
   }
 
