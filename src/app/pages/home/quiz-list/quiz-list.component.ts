@@ -1,10 +1,11 @@
-import { Component, ComponentFactoryResolver, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { PlaceholderDirective } from '../../../core/directives/placeholder.directive';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { take } from 'rxjs';
 import { IPuzzle } from '../core/interfaces';
 import { QuizItemComponent } from '../quiz-item/quiz-item.component';
 import QUIZ_DATA from '../core/data/quizData';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-quiz-list',
@@ -15,6 +16,10 @@ export class QuizListComponent implements OnInit {
   @ViewChild(PlaceholderDirective, { static: true }) host!: PlaceholderDirective;
   @ViewChild('answer', { read: TemplateRef }) answer!: TemplateRef<any>;
 
+  @HostListener('click') centerPuzzleBoard() {
+    this._scrollManager.scrollToAnchor('puzzles');
+  }
+
   public quizItems = [...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i })), ...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i + 6}))];
   public isBoardActive = true;
   public isSuccess = false;
@@ -22,7 +27,8 @@ export class QuizListComponent implements OnInit {
   public firstSelectedPuzzle: { puzzle: IPuzzle, element: QuizItemComponent } | null = null;
   public secondSelectedPuzzle: { puzzle: IPuzzle, element: QuizItemComponent } | null = null;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(private _componentFactoryResolver: ComponentFactoryResolver,
+              private _scrollManager: ViewportScroller) { }
 
   ngOnInit(): void {
     this.shufflePuzzles();

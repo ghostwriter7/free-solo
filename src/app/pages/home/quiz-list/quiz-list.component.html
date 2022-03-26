@@ -1,5 +1,5 @@
 <app-wrapper>
-  <div class="quiz-wrapper" [ngStyle]="{ pointerEvents: isBoardActive ? 'auto' : 'none'}">
+  <div appScrollIntoView id="puzzles" class="quiz-wrapper" [ngStyle]="{ pointerEvents: isBoardActive ? 'auto' : 'none'}">
       <app-quiz-item
         #puzzleEl
         (click)="onClick(puzzle, puzzleEl)"

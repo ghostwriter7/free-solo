@@ -11,13 +11,13 @@ import { PlaceholderDirective } from '../core/directives/placeholder.directive';
     PageHeaderComponent,
     WrapperComponent,
     ModalComponent,
-    PlaceholderDirective
+    PlaceholderDirective,
   ],
   exports: [
     PageHeaderComponent,
     WrapperComponent,
     ModalComponent,
-    PlaceholderDirective
+    PlaceholderDirective,
   ],
   imports: [
     CommonModule,
