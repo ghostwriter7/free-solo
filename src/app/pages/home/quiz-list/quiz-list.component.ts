@@ -1,4 +1,12 @@
-import { Component, ComponentFactoryResolver, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  HostListener,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { PlaceholderDirective } from '../../../core/directives/placeholder.directive';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { take } from 'rxjs';

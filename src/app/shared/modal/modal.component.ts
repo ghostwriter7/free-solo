@@ -5,7 +5,7 @@ import {
   HostBinding, HostListener,
   Input,
   OnInit,
-  Output,
+  Output, Renderer2,
   TemplateRef,
   ViewChild
 } from '@angular/core';
@@ -32,13 +32,15 @@ import { ViewportScroller } from '@angular/common';
 export class ModalComponent implements OnInit {
   @ViewChild(PlaceholderDirective, { static: true }) contentHost!: PlaceholderDirective;
   @ViewChild('overlay', { static: true }) overlayEl!: ElementRef;
+  @ViewChild('modal', { static: true }) modalEl!: ElementRef;
   @Input() title!: string;
   @Input() contentRef!: TemplateRef<any>;
   @Output() close = new EventEmitter<void>();
   public isGone = false;
 
   constructor(public iconsService: IconsService,
-              private _scrollManager: ViewportScroller) { }
+              private _scrollManager: ViewportScroller,
+              private _renderer: Renderer2) { }
 
   @HostListener('window:scroll') onScroll() {
     this.overlayEl.nativeElement.style.top = window.scrollY + 'px';
@@ -48,7 +50,8 @@ export class ModalComponent implements OnInit {
     this.overlayEl.nativeElement.style.top = window.scrollY + 'px';
     this.contentHost.viewContainerRef.clear();
     this.contentHost.viewContainerRef.createEmbeddedView<any>(this.contentRef);
-    this._scrollManager.scrollToAnchor('modalContent');
+    this.modalEl.nativeElement.style.top = this._renderer.selectRootElement('#puzzles', true).getBoundingClientRect().top + window.scrollY + 'px';
+    this.modalEl.nativeElement.style.left = (innerWidth - this.modalEl.nativeElement.offsetWidth) / 2 + 'px';
   }
 
   public onClose(): void {

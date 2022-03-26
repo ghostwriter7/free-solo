@@ -1,11 +1,8 @@
 .overlay {
   position: absolute;
-  width: 100%;
+  width: 101%;
   height: 100%;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   backdrop-filter: blur(5px);
   z-index: 4;
 }
@@ -14,8 +11,7 @@
   width: 80%;
   max-width: 750px;
   min-height: fit-content;
-  inset: 0;
-  margin: 12rem auto;
+  left: 5%;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   border-radius: 1rem;
