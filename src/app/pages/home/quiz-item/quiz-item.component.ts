@@ -10,7 +10,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     trigger('flip', [
       state('show', style({transform: 'rotateY(180deg)'})),
       state('hide', style({ transform: 'rotateY(0deg)'})),
-      transition('show <=> hide', animate('0.5s ease-in-out'))
+      transition('show <=> hide', animate('0.3s ease-in-out'))
     ])
   ]
 })

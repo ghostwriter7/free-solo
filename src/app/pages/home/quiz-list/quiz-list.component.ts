@@ -68,7 +68,7 @@ export class QuizListComponent implements OnInit {
               this.firstSelectedPuzzle = null;
               this.secondSelectedPuzzle = null;
             });
-          }, 1000);
+          }, 800);
         } else {
           this.isWrong = true;
           setTimeout(() => {
@@ -78,9 +78,9 @@ export class QuizListComponent implements OnInit {
             this.firstSelectedPuzzle = null;
             this.secondSelectedPuzzle = null;
             this.isBoardActive = true;
-          }, 1500);
+          }, 1200);
         }
-      }, 500);
+      }, 300);
   }
 
   private shufflePuzzles(): void {
