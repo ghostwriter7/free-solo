@@ -13,3 +13,7 @@
 </app-wrapper>
 
 <ng-container appPlaceholder></ng-container>
+
+<ng-template #answer>
+  <p *ngFor="let text of firstSelectedPuzzle!.puzzle.text" [innerHTML]="text"></p>
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { PlaceholderDirective } from '../../../core/directives/placeholder.directive';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { take } from 'rxjs';
@@ -13,6 +13,7 @@ import QUIZ_DATA from '../core/data/quizData';
 })
 export class QuizListComponent implements OnInit {
   @ViewChild(PlaceholderDirective, { static: true }) host!: PlaceholderDirective;
+  @ViewChild('answer', { read: TemplateRef }) answer!: TemplateRef<any>;
 
   public quizItems = [...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i })), ...QUIZ_DATA.map((obj, i) => ({ ...obj, id: i + 6}))];
   public isBoardActive = true;
@@ -42,7 +43,7 @@ export class QuizListComponent implements OnInit {
         if (this.firstSelectedPuzzle!.puzzle.icon === this.secondSelectedPuzzle!.puzzle.icon) {
           this.isSuccess = true;
           setTimeout(() => {
-            this.createModal(this.firstSelectedPuzzle!.puzzle.title, this.firstSelectedPuzzle!.puzzle.text).then(() => {
+            this.createModal(this.firstSelectedPuzzle!.puzzle.title, this.answer).then(() => {
               this.isSuccess = false;
               this.isBoardActive = true;
               this.firstSelectedPuzzle!.puzzle.isActive = false;
@@ -69,12 +70,12 @@ export class QuizListComponent implements OnInit {
     this.quizItems.sort((a, b) => 0.5 - Math.random());
   }
 
-  private createModal(title: string, text: string): Promise<void> {
+  private createModal(title: string, content: TemplateRef<any>): Promise<void> {
     const modalFactory = this._componentFactoryResolver.resolveComponentFactory(ModalComponent);
     this.host.viewContainerRef.clear();
     const component = this.host.viewContainerRef.createComponent(modalFactory);
     component.instance.title = title;
-    component.instance.content.nativeElement.innerHTML = text;
+    component.instance.contentRef = content;
 
     return new Promise<void>((resolve, reject) => {
       component.instance.close.pipe(take(1)).subscribe({

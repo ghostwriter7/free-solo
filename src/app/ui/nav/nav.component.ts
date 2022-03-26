@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { ThemeService, IconsService } from '../../core/services';
-import { BehaviorSubject, Subject, take, takeWhile } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -23,8 +23,8 @@ export class NavComponent implements OnInit {
 
   constructor(
     public iconsService: IconsService,
-    private _themeService: ThemeService,
-    private _renderer2: Renderer2
+    public _themeService: ThemeService,
+    private _renderer2: Renderer2,
   ) {}
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { IconsService } from '../../core/services';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { PlaceholderDirective } from '../../core/directives/placeholder.directive';
 
 @Component({
   selector: 'app-modal',
@@ -14,14 +15,17 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class ModalComponent implements OnInit {
-  @ViewChild('content', { static: true }) content!: ElementRef;
+  @ViewChild(PlaceholderDirective, { static: true }) contentHost!: PlaceholderDirective;
   @Input() title!: string;
+  @Input() contentRef!: TemplateRef<any>;
   @Output() close = new EventEmitter<void>();
   public isGone = false;
 
   constructor(public iconsService: IconsService) { }
 
   ngOnInit(): void {
+    this.contentHost.viewContainerRef.clear();
+    this.contentHost.viewContainerRef.createEmbeddedView<any>(this.contentRef);
   }
 
   public onClose(): void {
