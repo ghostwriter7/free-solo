@@ -4,9 +4,10 @@
     [style.background-image]="'url('+slide.imgPath+')'"
     [style.transform]="slide.transform"
     class="slider__slide"
+    (pointerdown)="onSelect(slide)"
     *ngFor="let slide of projects; let i = index;">
     <div class="slider__header">
-      <span class="slider__index">{{i}}</span>
+      <span class="slider__index">{{i + 1}}</span>
       <h3 class="slider__title">{{ slide.title }}</h3>
     </div>
   </div>

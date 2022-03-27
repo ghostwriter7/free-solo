@@ -12,6 +12,11 @@
     background-position: center;
     background-size: cover;
     background-blend-mode: luminosity;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-accent);
+    }
   }
 
   &__header {

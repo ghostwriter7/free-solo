@@ -6,6 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProjectsContainerComponent } from './projects-container/projects-container.component';
 import { ProjectsSliderComponent } from './projects-slider/projects-slider.component';
 import { ProjectPreviewComponent } from './project-preview/project-preview.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -19,7 +20,8 @@ import { ProjectPreviewComponent } from './project-preview/project-preview.compo
   imports: [
     CommonModule,
     ProjectsRoutingModule,
-    SharedModule
+    SharedModule,
+    FontAwesomeModule
   ]
 })
 export class ProjectsModule { }

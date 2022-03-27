@@ -3,6 +3,7 @@ export interface IProject {
   imgPath: string;
   github: string;
   live: string;
+  tech: string[];
   offset: number;
   transform: string;
 }

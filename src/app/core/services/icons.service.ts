@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  faBars, faBook, faBookOpen,
+  faBars, faBinoculars, faBook, faBookOpen,
   faEllipsisV,
   faFistRaised,
   faGhost,
@@ -9,6 +9,7 @@ import {
   faSun,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
+import { faAngular, faCss3, faGithub, faHtml5, faJs, faReact } from '@fortawesome/free-brands-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,14 @@ export class IconsService {
     ghost: faGhost,
     balls: faEllipsisV,
     book: faBookOpen,
-    question: faQuestion
+    question: faQuestion,
+    react: faReact,
+    angular: faAngular,
+    js: faJs,
+    html: faHtml5,
+    css: faCss3,
+    github: faGithub,
+    seeIt: faBinoculars
   }
 
   public getIcon(icon: string): any {

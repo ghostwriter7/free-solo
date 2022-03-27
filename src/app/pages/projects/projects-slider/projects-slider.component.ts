@@ -1,13 +1,13 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, OnDestroy,
+  ElementRef, EventEmitter, OnDestroy, Output,
   ViewChild,
 } from '@angular/core';
 import PROJECTS_DATA from '../core/data/projectsData';
 import { IProject } from '../core/interfaces';
 import {
-  animationFrameScheduler,
+  animationFrameScheduler, delay,
   fromEvent,
   interval,
   scan,
@@ -16,6 +16,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { ProjectsService } from '../core/services/projects.service';
 
 @Component({
   selector: 'app-projects-slider',
@@ -25,11 +26,13 @@ import {
 export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('slider', {static: true}) slider!: ElementRef;
   @ViewChild('slide') slide!: ElementRef;
+  @Output() selected = new EventEmitter<IProject>();
   public projects: IProject[] = PROJECTS_DATA;
   public slider$!: Subscription;
-
   private slideDimension!: number;
   private translationAxis!: string;
+
+  constructor(private _projectsService: ProjectsService) {}
 
   ngAfterViewInit() {
     this.slider$ = fromEvent(window, 'resize').pipe(
@@ -39,25 +42,34 @@ export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
         this.configureSlider();
       }),
       switchMap(() => {
-      return interval(0, animationFrameScheduler).pipe(
-        scan<number, { data: IProject[], current: number}>((state, val) => {
-        state.data = state.data.map((item) => ({...item, offset: item.offset - 1, transform: `translate${this.translationAxis}(${item.offset}px)` }));
+        return interval(0, animationFrameScheduler).pipe(
+          delay(1500),
+          scan<number, { data: IProject[], current: number }>((state, val) => {
+            state.data = state.data.map((item) => ({
+              ...item,
+              offset: item.offset - 1,
+              transform: `translate${this.translationAxis}(${item.offset}px)`
+            }));
 
-        if (val && val % this.slideDimension === 0) {
-          state.data[state.current].offset += this.slideDimension * this.projects.length;
-          state.current = state.current === this.projects.length - 1 ? 0 : state.current += 1;
-        }
+            if (val && val % this.slideDimension === 0) {
+              state.data[state.current].offset += this.slideDimension * this.projects.length;
+              state.current = state.current === this.projects.length - 1 ? 0 : state.current += 1;
+            }
 
-        this.projects = state.data;
+            this.projects = state.data;
 
-        return state;
-      }, { data: this.projects, current: 0}))
-    })).subscribe()
+            return state;
+          }, {data: this.projects, current: 0}))
+      })).subscribe()
+  }
+
+  public onSelect(project: IProject): void {
+    this._projectsService.selectedProject$.next(project);
   }
 
   private configureSlider(): void {
-    const { marginBlock, marginInline } = getComputedStyle(this.slide.nativeElement)
-    const { offsetWidth, offsetHeight } = this.slide.nativeElement
+    const {marginBlock, marginInline} = getComputedStyle(this.slide.nativeElement)
+    const {offsetWidth, offsetHeight} = this.slide.nativeElement
     this.slideDimension = Math.trunc(innerWidth < 600
       ? offsetWidth + 2 * parseInt(marginInline)
       : offsetHeight + 2 * parseInt(marginBlock));
@@ -66,10 +78,11 @@ export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
 
   private resetOffset(): void {
     this.projects.forEach(project => {
-    project.offset = 0;
-    project.transform = '';
-  });
-}
+      project.offset = 0;
+      project.transform = '';
+    });
+  }
+
   ngOnDestroy() {
     this.slider$.unsubscribe();
   }
