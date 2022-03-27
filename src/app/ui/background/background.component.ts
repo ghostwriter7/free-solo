@@ -27,9 +27,9 @@ export class BackgroundComponent implements OnInit {
   private readonly _verticalRange = [innerWidth / 20, -innerWidth / 20];
 
   @HostListener('window:resize') onWindowResize(): void {
-    this._renderer.setSize(innerWidth, innerHeight);
     this._camera.aspect = innerWidth / innerHeight;
     this._camera.updateProjectionMatrix();
+    this._renderer.setSize(innerWidth, innerHeight, true);
   }
 
   @HostListener('window:scroll') onScroll(): void {
