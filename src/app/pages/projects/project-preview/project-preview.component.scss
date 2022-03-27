@@ -35,7 +35,7 @@
   }
 
   &__preview {
-    width: 100%;
+    width: calc(100% - 50px);
     height: 250px;
     background-size: cover;
     background-position: center;
@@ -86,7 +86,6 @@
   font-weight: normal;
   font-size: 1rem;
   margin: 35px 25px;
-  margin-block: 35px;
 
   &::before {
     text-transform: initial;
@@ -105,6 +104,17 @@
 @media screen and (min-width: 600px) {
   .project {
     &__header {
+      flex-direction: column-reverse;
+    }
+
+    &__preview {
+    }
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .project {
+    &__header {
       flex-direction: row;
     }
 
@@ -114,9 +124,6 @@
 
     &__preview {
       flex-basis: 60%;
-    }
-    &__tech {
-
     }
   }
 }

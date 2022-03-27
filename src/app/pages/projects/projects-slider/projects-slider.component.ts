@@ -70,10 +70,10 @@ export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
   private configureSlider(): void {
     const {marginBlock, marginInline} = getComputedStyle(this.slide.nativeElement)
     const {offsetWidth, offsetHeight} = this.slide.nativeElement
-    this.slideDimension = Math.trunc(innerWidth < 600
+    this.slideDimension = Math.trunc(innerWidth < 800
       ? offsetWidth + 2 * parseInt(marginInline)
       : offsetHeight + 2 * parseInt(marginBlock));
-    this.translationAxis = innerWidth < 600 ? 'X' : 'Y';
+    this.translationAxis = innerWidth < 800 ? 'X' : 'Y';
   }
 
   private resetOffset(): void {
