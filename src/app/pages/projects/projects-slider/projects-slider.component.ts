@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, EventEmitter, OnDestroy, Output,
+  ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
   ViewChild,
 } from '@angular/core';
 import PROJECTS_DATA from '../core/data/projectsData';
@@ -9,7 +9,7 @@ import { IProject } from '../core/interfaces';
 import {
   animationFrameScheduler, delay,
   fromEvent,
-  interval,
+  interval, Observable,
   scan,
   startWith,
   Subscription,
@@ -23,16 +23,21 @@ import { ProjectsService } from '../core/services/projects.service';
   templateUrl: './projects-slider.component.html',
   styleUrls: ['./projects-slider.component.scss']
 })
-export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
+export class ProjectsSliderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('slider', {static: true}) slider!: ElementRef;
   @ViewChild('slide') slide!: ElementRef;
   @Output() selected = new EventEmitter<IProject>();
   public projects: IProject[] = PROJECTS_DATA;
   public slider$!: Subscription;
+  public maxHeight$!: Observable<string>
   private slideDimension!: number;
   private translationAxis!: string;
 
   constructor(private _projectsService: ProjectsService) {}
+
+  ngOnInit() {
+    this.maxHeight$ = this._projectsService.sliderHeight$;
+  }
 
   ngAfterViewInit() {
     this.slider$ = fromEvent(window, 'resize').pipe(

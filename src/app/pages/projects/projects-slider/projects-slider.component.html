@@ -1,4 +1,4 @@
-<div #slider class="slider">
+<div #slider class="slider" [style.max-height]="maxHeight$ | async">
   <div
     #slide
     [style.background-image]="'url('+slide.imgPath+')'"
