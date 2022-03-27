@@ -27,11 +27,11 @@ export class ProjectPreviewComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this._sliderHeight = this.projectEl.nativeElement.getBoundingClientRect().height;
+    this._projectsService.updateSliderHeight(this._sliderHeight);
     this._subscription = fromEvent(window, 'resize').subscribe(() => {
       this._sliderHeight = this.projectEl.nativeElement.getBoundingClientRect().height;
       this._projectsService.updateSliderHeight(this._sliderHeight);
-      console.log(this._sliderHeight);
-    })
+    });
   }
 
   ngOnDestroy() {

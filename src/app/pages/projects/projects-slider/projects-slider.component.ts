@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
+  ElementRef, EventEmitter, OnDestroy, Output,
   ViewChild,
 } from '@angular/core';
 import PROJECTS_DATA from '../core/data/projectsData';
@@ -23,24 +23,24 @@ import { ProjectsService } from '../core/services/projects.service';
   templateUrl: './projects-slider.component.html',
   styleUrls: ['./projects-slider.component.scss']
 })
-export class ProjectsSliderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('slider', {static: true}) slider!: ElementRef;
   @ViewChild('slide') slide!: ElementRef;
   @Output() selected = new EventEmitter<IProject>();
   public projects: IProject[] = PROJECTS_DATA;
-  public slider$!: Subscription;
   public maxHeight$!: Observable<string>
   private slideDimension!: number;
   private translationAxis!: string;
+  private subscriptions: Subscription[] = [];
 
   constructor(private _projectsService: ProjectsService) {}
 
-  ngOnInit() {
-    this.maxHeight$ = this._projectsService.sliderHeight$;
-  }
-
   ngAfterViewInit() {
-    this.slider$ = fromEvent(window, 'resize').pipe(
+    this.subscriptions[0] = this._projectsService.sliderHeight$.subscribe((val) => {
+        this.slider.nativeElement.style.maxHeight = val;
+    });
+
+    this.subscriptions[1] = fromEvent(window, 'resize').pipe(
       startWith('init'),
       tap(() => {
         this.resetOffset();
@@ -65,16 +65,16 @@ export class ProjectsSliderComponent implements OnInit, AfterViewInit, OnDestroy
 
             return state;
           }, {data: this.projects, current: 0}))
-      })).subscribe()
+      })).subscribe();
   }
 
   public onSelect(project: IProject): void {
-    this._projectsService.selectedProject$.next(project);
+    this._projectsService.selectProject(project);
   }
 
   private configureSlider(): void {
-    const {marginBlock, marginInline} = getComputedStyle(this.slide.nativeElement)
-    const {offsetWidth, offsetHeight} = this.slide.nativeElement
+    const {marginBlock, marginInline} = getComputedStyle(this.slide.nativeElement);
+    const {offsetWidth, offsetHeight} = this.slide.nativeElement;
     this.slideDimension = Math.trunc(innerWidth < 800
       ? offsetWidth + 2 * parseInt(marginInline)
       : offsetHeight + 2 * parseInt(marginBlock));
@@ -89,7 +89,6 @@ export class ProjectsSliderComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnDestroy() {
-    this.slider$.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-
 }
