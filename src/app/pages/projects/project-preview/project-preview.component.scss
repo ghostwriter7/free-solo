@@ -59,21 +59,12 @@
     outline-offset: 5px;
     padding-block: 1rem;
 
+    span:not(:last-of-type) {
+      margin-right: 2rem;
+    }
+
     fa-icon {
       font-size: min(5vw, 3rem);
-      transform: scale(1);
-      transition: transform .3s ease-in-out;
-
-      &:hover {
-        transform: scale(1.1);
-        filter: drop-shadow(0px 0px 10px var(--bg-primary));
-        -webkit-filter: drop-shadow( 0px 0px 10px var(--bg-primary));
-
-      }
-
-      &:not(:last-of-type) {
-        margin-right: 2rem;
-      }
     }
   }
 }
@@ -101,13 +92,21 @@
   }
 }
 
+fa-icon {
+  transform: scale(1);
+  transition: transform .3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0px 0px 10px var(--bg-primary));
+    -webkit-filter: drop-shadow( 0px 0px 10px var(--bg-primary));
+  }
+}
+
 @media screen and (min-width: 600px) {
   .project {
     &__header {
       flex-direction: column-reverse;
-    }
-
-    &__preview {
     }
   }
 }

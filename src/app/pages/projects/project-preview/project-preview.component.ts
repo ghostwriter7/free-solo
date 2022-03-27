@@ -11,6 +11,12 @@ import { fromEvent, Subscription } from 'rxjs';
 })
 export class ProjectPreviewComponent implements OnInit, AfterViewInit {
   @ViewChild('project') projectEl!: ElementRef;
+  public tooltipMap: {[key: string]: string} = {
+    'angular': 'Angular',
+    'js': 'JavaScript',
+    'html': 'HTML5',
+    'css': 'CSS3'
+  };
   public selectedProject!: IProject;
   private _sliderHeight!: number;
   private _subscription!: Subscription;

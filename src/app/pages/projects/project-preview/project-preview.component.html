@@ -3,10 +3,10 @@
     <div class="project__meta">
       <h1 class="project__title label" title="Title">{{ selectedProject.title }}</h1>
       <div class="project__links label" title="Links">
-        <a class="project__link" [href]="selectedProject.github" target="_blank">
+        <a appTooltip tooltipText="Github profile" class="project__link" [href]="selectedProject.github" target="_blank">
           <fa-icon [icon]="iconsService.getIcon('github')"></fa-icon>
         </a>
-        <a class="project__link" [href]="selectedProject.live" target="_blank">
+        <a appTooltip tooltipText="See live" class="project__link" [href]="selectedProject.live" target="_blank">
           <fa-icon [icon]="iconsService.getIcon('seeIt')"></fa-icon>
         </a>
       </div>
@@ -19,6 +19,9 @@
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam at laudantium provident rem. Aliquid dolorem enim, est et, eum expedita fugit modi nam nesciunt pariatur quam reiciendis temporibus totam voluptas.
   </div>
   <div class="project__tech label" title="Tech stack">
-    <fa-icon *ngFor="let tech of selectedProject.tech" [icon]="iconsService.getIcon(tech)"></fa-icon>
+    <span *ngFor="let tech of selectedProject.tech" appTooltip [tooltipText]="tooltipMap[tech]">
+      <fa-icon
+         [icon]="iconsService.getIcon(tech)"></fa-icon>
+    </span>
   </div>
 </div>
