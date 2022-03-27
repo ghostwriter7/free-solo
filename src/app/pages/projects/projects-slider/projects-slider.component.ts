@@ -1,12 +1,21 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, HostListener, OnDestroy,
+  ElementRef, OnDestroy,
   ViewChild,
 } from '@angular/core';
 import PROJECTS_DATA from '../core/data/projectsData';
 import { IProject } from '../core/interfaces';
-import { animationFrameScheduler, interval, scan, startWith, Subject, Subscription, switchMap, tap, timer } from 'rxjs';
+import {
+  animationFrameScheduler,
+  fromEvent,
+  interval,
+  scan,
+  startWith,
+  Subscription,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-projects-slider',
@@ -17,22 +26,18 @@ export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('slider', {static: true}) slider!: ElementRef;
   @ViewChild('slide') slide!: ElementRef;
   public projects: IProject[] = PROJECTS_DATA;
-  public slide$!: Subscription;
+  public slider$!: Subscription;
 
   private slideDimension!: number;
   private translationAxis!: string;
-  private resize$ = new Subject<void>();
-
-  @HostListener('window:resize') onResize() {
-    this.configureSlider();
-    this.resize$.next();
-  }
 
   ngAfterViewInit() {
-    this.configureSlider();
-    this.resize$.pipe(
+    this.slider$ = fromEvent(window, 'resize').pipe(
       startWith('init'),
-      tap(this.resetOffset.bind(this)),
+      tap(() => {
+        this.resetOffset();
+        this.configureSlider();
+      }),
       switchMap(() => {
       return interval(0, animationFrameScheduler).pipe(
         scan<number, { data: IProject[], current: number}>((state, val) => {
@@ -66,7 +71,7 @@ export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
   });
 }
   ngOnDestroy() {
-    this.slide$.unsubscribe();
+    this.slider$.unsubscribe();
   }
 
 }
