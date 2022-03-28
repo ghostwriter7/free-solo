@@ -16,7 +16,7 @@
          [style.background-image]="'url('+selectedProject.imgPath+')'"></div>
   </div>
   <div class="project__description label" title="Description">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam at laudantium provident rem. Aliquid dolorem enim, est et, eum expedita fugit modi nam nesciunt pariatur quam reiciendis temporibus totam voluptas.
+    {{ selectedProject.text }}
   </div>
   <div class="project__tech label" title="Tech stack">
     <span *ngFor="let tech of selectedProject.tech" appTooltip [tooltipText]="tooltipMap[tech]">

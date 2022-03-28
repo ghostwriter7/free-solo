@@ -5,15 +5,14 @@ const QUIZ_DATA: IPuzzle[] = [
     title: "juggling",
     icon: "balls",
     text: [`Juggling is a part of my <strong>mind training</strong>. I believe
-    that we're often too consumed with our body's appearence, completely
+    that we're often too consumed with our body's appearance, completely
     neglecting brain's fitness.`,
       `Juggling is a <b>mind's martial art</b>. It teaches you how to deconstruct
-    event the most complex challenge into managable pieces and once it's
+    even the most complex challenge into manageable pieces and once it's
     done, it develops a <b>habit of winning</b>.`,
-      `You learn a new trick, then another one, and one more and soon
-    you've got dozens of them under your belt and you think you can
+      `You learn a new trick, then another one, and one more, and soon
+    you've got dozens of them under your belt, and you think you can
     learn anything. It's <b>pretty empowering.</b>`,
-      `<a href='https://www.youtube.com/watch?v=-sXGkJsTrY8&t=1s" class="btn" target="_blank">DEMO</a>`,
       `<b>Would you like to try?</b>`],
     isActive: true
   },
@@ -43,7 +42,7 @@ const QUIZ_DATA: IPuzzle[] = [
     icon: "laptop",
     text: [`Why do I want to become a software developer? Answer is simple. I think there's <b>nothing more sexy than intelligence</b>.
     And I want to do a job that stimulates it, instead of leading to mental decline.`,
-      `I've done a lot in tourism industry, including jobs that at first sound like a dream of an adventure-seeker. But there have always been this single ingriedent missing, which I seek, <b>intellectual challenges</b> .`],
+      `I've done a lot in tourism industry, including jobs that at first sound like a dream of an adventure-seeker. But there have always been this single ingredient missing, which I seek, <b>intellectual challenges</b>.`],
     isActive: true
   },
   {

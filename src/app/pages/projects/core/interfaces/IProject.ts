@@ -6,4 +6,5 @@ export interface IProject {
   tech: string[];
   offset: number;
   transform: string;
+  text: string;
 }
