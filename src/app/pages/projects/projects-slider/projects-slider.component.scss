@@ -1,7 +1,6 @@
 .slider {
   display: flex;
   overflow-x: hidden;
-  background-color: var(--bg-secondary);
 
   &__slide {
     min-width: 100%;
@@ -13,7 +12,12 @@
     background-size: cover;
     background-blend-mode: luminosity;
     cursor: pointer;
-    transition: transform 0.1s ease;
+    border: 2px dashed var(--text-primary);
+    outline: 2px dashed var(--text-primary);
+    outline-offset: -7px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
 
     &:hover {
       background-color: var(--color-accent);
@@ -23,19 +27,21 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    padding-inline: 4px;
     align-items: center;
-    padding-inline: 1rem;
+    flex-basis: 100%;
   }
 
   &__title {
     background-color: var(--bg-primary);
-    opacity: .8;
+    border: 2px dashed var(--text-primary);
     padding: 0.5rem 1.5rem;
     display: inline-block;
   }
 
   &__index {
-    background-color: var(--color-accent);
+    background-color: var(--bg-primary);
+    border: 2px dashed var(--text-primary);
     padding: .5rem;
   }
 }
