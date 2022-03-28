@@ -1,8 +1,8 @@
 <div class="project" #project>
   <div class="project__header">
     <div class="project__meta">
-      <h1 class="project__title label" title="Title">{{ selectedProject.title }}</h1>
-      <div class="project__links label" title="Links">
+      <h1 class="project__title label" data-label="Title">{{ selectedProject.title }}</h1>
+      <div class="project__links label" data-label="Links">
         <a appTooltip tooltipText="Github profile" class="project__link" [href]="selectedProject.github" target="_blank">
           <fa-icon [icon]="iconsService.getIcon('github')"></fa-icon>
         </a>
@@ -12,16 +12,15 @@
       </div>
     </div>
     <div class="project__preview label"
-         title="Preview"
+         data-label="Preview"
          [style.background-image]="'url('+selectedProject.imgPath+')'"></div>
   </div>
-  <div class="project__description label" title="Description">
+  <div class="project__description label" data-label="Description">
     {{ selectedProject.text }}
   </div>
-  <div class="project__tech label" title="Tech stack">
+  <div class="project__tech label" data-label="Tech stack">
     <span *ngFor="let tech of selectedProject.tech" appTooltip [tooltipText]="tooltipMap[tech]">
-      <fa-icon
-         [icon]="iconsService.getIcon(tech)"></fa-icon>
+      <fa-icon [icon]="iconsService.getIcon(tech)"></fa-icon>
     </span>
   </div>
 </div>

@@ -84,7 +84,7 @@
     text-transform: initial;
     text-indent: 0;
     font-size: 1rem;
-    content: attr(title);
+    content: attr(data-label);
     position: absolute;
     left: 5px;
     bottom: calc(100% - 3px);
