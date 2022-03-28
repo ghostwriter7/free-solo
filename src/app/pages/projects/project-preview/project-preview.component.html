@@ -3,7 +3,7 @@
     <div class="project__meta">
       <h1 class="project__title label" data-label="Title">{{ selectedProject.title }}</h1>
       <div class="project__links label" data-label="Links">
-        <a appTooltip tooltipText="Github profile" class="project__link" [href]="selectedProject.github" target="_blank">
+        <a appTooltip tooltipText="See repository" class="project__link" [href]="selectedProject.github" target="_blank">
           <fa-icon [icon]="iconsService.getIcon('github')"></fa-icon>
         </a>
         <a appTooltip tooltipText="See live" class="project__link" [href]="selectedProject.live" target="_blank">

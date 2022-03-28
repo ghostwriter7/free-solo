@@ -1,12 +1,20 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader';
 import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
-import { GUI } from 'dat.gui';
 import { ThemeService } from '../../core/services';
+import {
+  Clock,
+  Color,
+  Mesh,
+  MeshBasicMaterial,
+  OctahedronGeometry,
+  PerspectiveCamera,
+  Scene,
+  WebGLRenderer
+} from 'three';
 
 @Component({
   selector: 'app-background',
@@ -15,13 +23,13 @@ import { ThemeService } from '../../core/services';
 })
 export class BackgroundComponent implements OnInit {
   @ViewChild('background', { static: true }) canvas!: ElementRef;
-  private _renderer!: THREE.WebGLRenderer;
-  private _scene!: THREE.Scene;
-  private _camera!: THREE.PerspectiveCamera;
-  private _cubes: THREE.Mesh[] = [];
-  private _material!: THREE.MeshBasicMaterial;
+  private _renderer!: WebGLRenderer;
+  private _scene!: Scene;
+  private _camera!: PerspectiveCamera;
+  private _cubes: Mesh[] = [];
+  private _material!: MeshBasicMaterial;
   private _composer!: EffectComposer;
-  private _clock!: THREE.Clock;
+  private _clock!: Clock;
   private readonly _numberOfCubes = innerWidth / 50;
   private readonly _horizontalRange = [innerWidth / 10, -innerWidth / 10];
   private readonly _verticalRange = [innerWidth / 20, -innerWidth / 20];
@@ -44,10 +52,9 @@ export class BackgroundComponent implements OnInit {
     this.animate();
     this.renderCubes();
     this.animate();
-    // this.initGUI();
 
     this._themeService.canvasBackground$.subscribe((color) => {
-      this._scene.background = new THREE.Color(color);
+      this._scene.background = new Color(color);
     });
   }
 
@@ -59,15 +66,15 @@ export class BackgroundComponent implements OnInit {
 
   private createOctahedron(): void {
     let radius = this.getRandomNumb(20, 5);
-    const geo = new THREE.OctahedronGeometry(radius);
-    const mesh = new THREE.Mesh(geo, this._material);
+    const geo = new OctahedronGeometry(radius);
+    const mesh = new Mesh(geo, this._material);
     mesh.position.x = this.getRandomNumb(this._horizontalRange[0], this._horizontalRange[1]);
     mesh.position.y = this.getRandomNumb(this._verticalRange[0], this._verticalRange[1]);
 
     radius -= 3;
 
-    const smallGeo = new THREE.OctahedronGeometry(radius);
-    const smallMesh = new THREE.Mesh(smallGeo, this._material);
+    const smallGeo = new OctahedronGeometry(radius);
+    const smallMesh = new Mesh(smallGeo, this._material);
 
     mesh.add(smallMesh);
     this._cubes.push(mesh);
@@ -79,14 +86,14 @@ export class BackgroundComponent implements OnInit {
   }
 
   private init(): void {
-    this._renderer = new THREE.WebGLRenderer({ canvas: this.canvas.nativeElement});
+    this._renderer = new WebGLRenderer({ canvas: this.canvas.nativeElement});
     this._renderer.setSize(innerWidth, innerHeight);
-    this._scene = new THREE.Scene();
-    this._scene.background = new THREE.Color(0x1a1935);
-    this._camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+    this._scene = new Scene();
+    this._scene.background = new Color(0x1a1935);
+    this._camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
     this._camera.position.z = 100;
-    this._material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
-    this._clock = new THREE.Clock();
+    this._material = new MeshBasicMaterial({ color: 0xffffff, wireframe: true });
+    this._clock = new Clock();
   }
 
   private animate(): void {
@@ -114,26 +121,5 @@ export class BackgroundComponent implements OnInit {
     verticalBlur.uniforms['v'].value = 1 / innerHeight;
     verticalBlur.renderToScreen = true;
     this._composer.addPass(verticalBlur);
-  }
-
-  private initGUI(): void {
-    const palette = {
-      'bg-primary': [2, 1, 34],
-      'bg-secondary': [63, 78, 111],
-      'bg-body': '#1a1935',
-      'text-primary': [255,255,255],
-      'text-secondary': [0,0,0]
-    }
-    const gui = new GUI({ width: 500, });
-    gui.domElement.style.fontSize = '1.2rem';
-    gui.addColor(palette, 'bg-primary').onChange(val => this.setColorOnRoot('--bg-primary', val));
-    gui.addColor(palette, 'bg-secondary').onChange(val => this.setColorOnRoot('--bg-secondary', val));
-    gui.addColor(palette, 'bg-body').onChange(val => this._scene.background = new THREE.Color(val));
-    gui.addColor(palette, 'text-primary').onChange(val => this.setColorOnRoot('--text-primary', val));
-    gui.addColor(palette, 'text-secondary').onChange(val => this.setColorOnRoot('--text-secondary', val));
-  }
-
-  private setColorOnRoot(prop: string, val: any): void {
-    document.documentElement.style.setProperty(prop, `rgb(${val})`);
   }
 }
