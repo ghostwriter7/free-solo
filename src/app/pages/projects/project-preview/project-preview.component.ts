@@ -15,7 +15,8 @@ export class ProjectPreviewComponent implements OnInit, AfterViewInit {
     'angular': 'Angular',
     'js': 'JavaScript',
     'html': 'HTML5',
-    'css': 'CSS3'
+    'css': 'CSS3',
+    'react': 'React'
   };
   public selectedProject!: IProject;
   private _sliderHeight!: number;
