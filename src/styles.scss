@@ -10,6 +10,10 @@
   --color-accent: rgb(105, 84, 118);
 }
 
+html, body, app-root {
+  height: 100%;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -1,0 +1,5 @@
+<div class="footer">
+  <a class="footer__link" [href]="link.path" target="_blank" *ngFor="let link of links" appTooltip [tooltipText]="link.tooltip">
+    <fa-icon [icon]="iconsService.getIcon(link.icon)"></fa-icon>
+  </a>
+</div>

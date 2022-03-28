@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   faBars, faBinoculars, faBook, faBookOpen,
-  faEllipsisV,
+  faEllipsisV, faFilm,
   faFistRaised,
   faGhost,
   faLaptop,
@@ -9,7 +9,7 @@ import {
   faSun,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import { faAngular, faCss3, faGithub, faHtml5, faJs, faReact } from '@fortawesome/free-brands-svg-icons';
+import { faAngular, faCss3, faGithub, faHtml5, faJs, faLinkedin, faReact } from '@fortawesome/free-brands-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,9 @@ export class IconsService {
     html: faHtml5,
     css: faCss3,
     github: faGithub,
-    seeIt: faBinoculars
+    seeIt: faBinoculars,
+    linkedin: faLinkedin,
+    movie: faFilm
   }
 
   public getIcon(icon: string): any {

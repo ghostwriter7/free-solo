@@ -1,0 +1,39 @@
+.footer {
+  display: flex;
+  background-color: var(--bg-primary);
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  padding-block: 1rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    border: 2px dashed transparent;
+    border-top-color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
+    top: .5rem;
+    bottom: .5rem;
+  }
+
+  &__link {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+
+    &:not(:last-of-type) {
+      margin-right: 2rem;
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .footer {
+    padding-block: 2rem;
+
+    &__link {
+      font-size: 2rem;
+    }
+  }
+}
