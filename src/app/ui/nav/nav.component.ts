@@ -31,6 +31,7 @@ export class NavComponent implements OnInit {
     this.toggleMenu$.subscribe({
       next: (state) => {
         if (window.innerWidth < 600) {
+          debugger
           state ? this._renderer2.setStyle(document.body, 'overflow-y', 'hidden') :
             this._renderer2.setStyle(document.body, 'overflow-y', 'initial');
         }

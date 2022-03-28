@@ -16,7 +16,7 @@
           class="navbar__menu-link"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
-          (click)="isMenuActive = false;"
+          (click)="isMenuActive = false; toggleMenu$.next(false)"
           [routerLink]="item.path">
           {{ item.title }}
         </a>
