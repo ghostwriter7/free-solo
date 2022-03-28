@@ -32,7 +32,7 @@ export class NavComponent implements OnInit {
       next: (state) => {
         if (window.innerWidth < 600) {
           state ? this._renderer2.setStyle(document.body, 'overflow-y', 'hidden') :
-            this._renderer2.removeStyle(document.body, 'overflow-y');
+            this._renderer2.setStyle(document.body, 'overflow-y', 'initial');
         }
       }
     });
