@@ -107,7 +107,7 @@ export class BackgroundComponent implements OnInit {
       cube.rotation.y += 0.001;
     });
 
-    this._camera.rotation.y += 0.001;
+    this._camera.rotation.y += 0.0005;
 
     this._composer.render(delta)
   }

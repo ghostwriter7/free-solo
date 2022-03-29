@@ -34,9 +34,12 @@
     backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    transition: all 0.3s ease-in-out;
 
     &:hover {
       background-color: var(--color-accent);
+      transform: scale(1.1);
+      opacity: .9;
     }
 
     &::before {

@@ -1,14 +1,14 @@
-<div class="overlay" [@turnOffBlur]="isGone ? 'blurOff' : ''" #overlay></div>
+<div (click)="onClose()" class="overlay" [@turnOffBlur]="isGone ? 'blurOff' : ''" #overlay></div>
 
-  <div class="modal" [@slideAway]="isGone ? 'gone' : ''" #modal>
-    <div class="modal__header">
-      <span class="modal__title">{{ title }}</span>
-      <button (click)="onClose()" class="modal__close">
-        <fa-icon [icon]="iconsService.getIcon('times')"></fa-icon>
-      </button>
-    </div>
-    <div class="modal__body">
-      <ng-container appPlaceholder></ng-container>
-    </div>
+<div class="modal" [@slideAway]="isGone ? 'gone' : ''" #modal>
+  <div class="modal__header">
+    <span class="modal__title">{{ title }}</span>
+    <button (click)="onClose()" class="modal__close">
+      <fa-icon [icon]="iconsService.getIcon('times')"></fa-icon>
+    </button>
   </div>
+  <div class="modal__body">
+    <ng-container appPlaceholder></ng-container>
+  </div>
+</div>
 
