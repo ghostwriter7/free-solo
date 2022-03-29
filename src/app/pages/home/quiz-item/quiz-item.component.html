@@ -1,4 +1,4 @@
-<div [@flip]="isHidden ? 'hide': 'show'" class="card">
+<div [class.hide]="isHidden" [class.show]="!isHidden" class="card">
     <div
       [class.success]="isSuccess"
       [class.wrong]="isWrong"

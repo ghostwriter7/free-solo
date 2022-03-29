@@ -4,7 +4,6 @@
 }
 
 .card {
-  //min-height: 100px;
   box-sizing: border-box;
   perspective: 1000px;
   position: relative;
@@ -144,6 +143,16 @@
     transform: scale3d(1, 1, 1) rotateY(180deg);
     opacity: 1;
   }
+}
+
+.show {
+  transform: rotateY(180deg);
+  transition: 0.3s ease-in-out;
+}
+
+.hide {
+  transform: rotate(0deg);
+  transition: 0.3s ease-in-out;
 }
 
 
