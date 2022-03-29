@@ -2,7 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostBinding, HostListener,
+  HostListener,
   Input,
   OnInit,
   Output, Renderer2,
@@ -50,9 +50,17 @@ export class ModalComponent implements OnInit {
     this.overlayEl.nativeElement.style.top = window.scrollY + 'px';
     this.contentHost.viewContainerRef.clear();
     this.contentHost.viewContainerRef.createEmbeddedView<any>(this.contentRef);
-    this.modalEl.nativeElement.style.top = this._renderer.selectRootElement('#puzzles', true).getBoundingClientRect().top + window.scrollY + 'px';
-    this.modalEl.nativeElement.style.left = (innerWidth - this.modalEl.nativeElement.offsetWidth) / 2 + 'px';
-  }
+    if (innerWidth > 600) {
+      this.modalEl.nativeElement.style.top = this._renderer.selectRootElement('#puzzles', true).getBoundingClientRect().top + window.scrollY + 'px';
+      this.modalEl.nativeElement.style.left = (innerWidth - this.modalEl.nativeElement.offsetWidth) / 2 + 'px';
+    } else {
+      this._renderer.setStyle(this.modalEl.nativeElement, 'top', '100%');
+      setTimeout(() => {
+        this._scrollManager.setOffset([0, -300]);
+        this._scrollManager.scrollToAnchor('modalContent');
+      }, 500);
+    }
+   }
 
   public onClose(): void {
     this.isGone = true;

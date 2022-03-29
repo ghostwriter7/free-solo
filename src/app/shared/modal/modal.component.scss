@@ -8,10 +8,8 @@
 }
 
 .modal {
-  width: 80%;
   max-width: 750px;
   min-height: fit-content;
-  left: 5%;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   border-radius: 1rem;
@@ -61,6 +59,13 @@
   &__body {
     border: 3px solid var(--bg-secondary);
     padding: 1rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .modal {
+    width: 80%;
+    left: 5%;
   }
 }
 
