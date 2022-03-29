@@ -5,7 +5,7 @@
   align-items: center;
   position: relative;
   z-index: 1;
-  padding-block: 1rem;
+  padding-block: 1.5rem;
 
   &::before {
     content: '';
@@ -20,7 +20,7 @@
 
   &__link {
     color: var(--text-primary);
-    font-size: 1.25rem;
+    font-size: 1.75rem;
 
     &:not(:last-of-type) {
       margin-right: 2rem;
