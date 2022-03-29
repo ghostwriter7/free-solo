@@ -70,6 +70,7 @@ export class BackgroundComponent implements OnInit {
     const mesh = new Mesh(geo, this._material);
     mesh.position.x = this.getRandomNumb(this._horizontalRange[0], this._horizontalRange[1]);
     mesh.position.y = this.getRandomNumb(this._verticalRange[0], this._verticalRange[1]);
+    mesh.position.z = this.getRandomNumb(this._horizontalRange[0], this._horizontalRange[1]);
 
     radius -= 3;
 
@@ -91,7 +92,7 @@ export class BackgroundComponent implements OnInit {
     this._scene = new Scene();
     this._scene.background = new Color(0x1a1935);
     this._camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
-    this._camera.position.z = 100;
+    this._camera.position.z = 0;
     this._material = new MeshBasicMaterial({ color: 0xffffff, wireframe: true });
     this._clock = new Clock();
   }
@@ -105,6 +106,8 @@ export class BackgroundComponent implements OnInit {
       cube.rotation.x += 0.001;
       cube.rotation.y += 0.001;
     });
+
+    this._camera.rotation.y += 0.001;
 
     this._composer.render(delta)
   }
