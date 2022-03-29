@@ -23,10 +23,6 @@ import { ViewportScroller } from '@angular/common';
       state('gone', style({ transform: 'translateY(500%)' })),
       transition('* => gone', animate('0.5s'))
     ]),
-    trigger('turnOffBlur', [
-      state('blurOff', style({ 'backdrop-filter': 'blur(0px)'})),
-      transition('* => blurOff', animate('0.5s'))
-    ])
   ]
 })
 export class ModalComponent implements OnInit {
@@ -47,6 +43,7 @@ export class ModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._renderer.addClass(this.overlayEl.nativeElement, 'active');
     this.overlayEl.nativeElement.style.top = window.scrollY + 'px';
     this.contentHost.viewContainerRef.clear();
     this.contentHost.viewContainerRef.createEmbeddedView<any>(this.contentRef);
@@ -64,6 +61,7 @@ export class ModalComponent implements OnInit {
 
   public onClose(): void {
     this.isGone = true;
+    this._renderer.removeClass(this.overlayEl.nativeElement, 'active');
     setTimeout(() => {
       this.close.emit();
       this._scrollManager.scrollToAnchor('puzzles');

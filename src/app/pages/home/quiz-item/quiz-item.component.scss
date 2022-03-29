@@ -4,13 +4,14 @@
 }
 
 .card {
-  min-height: 100px;
+  //min-height: 100px;
   box-sizing: border-box;
   perspective: 1000px;
   position: relative;
   transition: transform 0.8s;
   transform-style: preserve-3d;
   cursor: pointer;
+  -moz-backface-visibility: hidden;
 
   &::before {
     content: '';
