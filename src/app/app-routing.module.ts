@@ -8,6 +8,8 @@ const routes: Routes = [
   { path: '**', redirectTo: 'home'}
 ];
 
+// TODO Add Space Invaders on 404 or something similar
+
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]

@@ -114,11 +114,11 @@ export class BackgroundComponent implements OnInit {
     this._composer.addPass(new RenderPass(this._scene,this._camera));
 
     const horizontalBlur = new ShaderPass(HorizontalBlurShader);
-    horizontalBlur.uniforms['h'].value = 1 / innerWidth;
+    horizontalBlur.uniforms['h'].value = .5 / innerWidth;
     this._composer.addPass(horizontalBlur);
 
     const verticalBlur = new ShaderPass(VerticalBlurShader);
-    verticalBlur.uniforms['v'].value = 1 / innerHeight;
+    verticalBlur.uniforms['v'].value = .5 / innerHeight;
     verticalBlur.renderToScreen = true;
     this._composer.addPass(verticalBlur);
   }
