@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { ProjectsService } from '../core/services/projects.service';
 import { IProject } from '../core/interfaces';
 import { IconsService } from '../../../core/services';
@@ -7,7 +15,8 @@ import { fromEvent, Subscription } from 'rxjs';
 @Component({
   selector: 'app-project-preview',
   templateUrl: './project-preview.component.html',
-  styleUrls: ['./project-preview.component.scss']
+  styleUrls: ['./project-preview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectPreviewComponent implements OnInit, AfterViewInit {
   @ViewChild('project') projectEl!: ElementRef;
@@ -24,11 +33,13 @@ export class ProjectPreviewComponent implements OnInit, AfterViewInit {
 
   constructor(
     public iconsService: IconsService,
-    private _projectsService: ProjectsService) { }
+    private _projectsService: ProjectsService,
+    private _cdRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this._projectsService.selectedProject$.subscribe((project) => {
       this.selectedProject = project;
+      this._cdRef.detectChanges();
     });
   }
 
@@ -44,5 +55,4 @@ export class ProjectPreviewComponent implements OnInit, AfterViewInit {
   ngOnDestroy() {
     this._subscription.unsubscribe();
   }
-
 }

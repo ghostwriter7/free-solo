@@ -1,15 +1,23 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
-  ElementRef, EventEmitter, OnDestroy, Output,
+  ElementRef,
+  EventEmitter,
+  NgZone,
+  OnDestroy,
+  Output,
   ViewChild,
 } from '@angular/core';
 import PROJECTS_DATA from '../core/data/projectsData';
 import { IProject } from '../core/interfaces';
 import {
-  animationFrameScheduler, delay,
+  animationFrameScheduler,
+  delay,
   fromEvent,
-  interval, Observable,
+  interval,
+  Observable,
   scan,
   startWith,
   Subscription,
@@ -21,7 +29,8 @@ import { ProjectsService } from '../core/services/projects.service';
 @Component({
   selector: 'app-projects-slider',
   templateUrl: './projects-slider.component.html',
-  styleUrls: ['./projects-slider.component.scss']
+  styleUrls: ['./projects-slider.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('slider', {static: true}) slider!: ElementRef;
@@ -33,11 +42,14 @@ export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
   private translationAxis!: string;
   private subscriptions: Subscription[] = [];
 
-  constructor(private _projectsService: ProjectsService) {}
+  constructor(private _projectsService: ProjectsService,
+              private _cdRef: ChangeDetectorRef,
+              private _zone: NgZone) {
+  }
 
   ngAfterViewInit() {
     this.subscriptions[0] = this._projectsService.sliderHeight$.subscribe((val) => {
-        this.slider.nativeElement.style.maxHeight = val;
+      this.slider.nativeElement.style.maxHeight = val;
     });
 
     this.subscriptions[1] = fromEvent(window, 'resize').pipe(
@@ -62,10 +74,12 @@ export class ProjectsSliderComponent implements AfterViewInit, OnDestroy {
             }
 
             this.projects = state.data;
-
+            this._cdRef.detectChanges();
             return state;
           }, {data: this.projects, current: 0}))
       })).subscribe();
+
+
   }
 
   public onSelect(project: IProject): void {

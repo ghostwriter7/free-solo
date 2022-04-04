@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ThemeService } from './core/services';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 
-  constructor(private _themeService: ThemeService) {
-  }
+  constructor(private _themeService: ThemeService) {}
 
   ngOnInit() {
     this._themeService.loadFavoriteTheme();

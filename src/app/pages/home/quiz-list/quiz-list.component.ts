@@ -1,7 +1,6 @@
 import {
   Component,
   ComponentFactoryResolver,
-  ElementRef,
   HostListener,
   OnInit,
   TemplateRef,
@@ -102,10 +101,5 @@ export class QuizListComponent implements OnInit {
         }
       });
     });
-  }
-
-  public quizList() {
-    console.log('QUIZ LIST');
-    return 'QUIZ LIST';
   }
 }

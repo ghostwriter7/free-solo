@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IProject } from '../interfaces';
 import PROJECTS_DATA from '../data/projectsData';
-import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
