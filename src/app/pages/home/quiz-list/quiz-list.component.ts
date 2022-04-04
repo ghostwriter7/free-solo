@@ -103,4 +103,9 @@ export class QuizListComponent implements OnInit {
       });
     });
   }
+
+  public quizList() {
+    console.log('QUIZ LIST');
+    return 'QUIZ LIST';
+  }
 }

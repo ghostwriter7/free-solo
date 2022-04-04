@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader';
@@ -34,24 +34,25 @@ export class BackgroundComponent implements OnInit {
   private readonly _horizontalRange = [innerWidth / 10, -innerWidth / 10];
   private readonly _verticalRange = [innerWidth / 20, -innerWidth / 20];
 
-  @HostListener('window:resize') onWindowResize(): void {
-    this._camera.aspect = innerWidth / innerHeight;
-    this._camera.updateProjectionMatrix();
-    this._renderer.setSize(innerWidth, innerHeight, true);
-  }
-
-  @HostListener('window:scroll') onScroll(): void {
-    this._renderer.domElement.style.top = window.scrollY + 'px';
-  }
-
-  constructor(private _themeService: ThemeService) {}
+  constructor(private _themeService: ThemeService,
+              private _zone: NgZone,
+              private _ngRenderer: Renderer2) {}
 
   ngOnInit(): void {
     this.init();
     this.initPostProcessing();
-    this.animate();
     this.renderCubes();
-    this.animate();
+    this._zone.runOutsideAngular(() => {
+      this.animate();
+      this._ngRenderer.listen(window, 'scroll', () => {
+        this._renderer.domElement.style.top = scrollY + 'px';
+      });
+      this._ngRenderer.listen(window, 'resize', () => {
+        this._camera.aspect = innerWidth / innerHeight;
+        this._camera.updateProjectionMatrix();
+        this._renderer.setSize(innerWidth, innerHeight, true);
+      });
+    });
 
     this._themeService.canvasBackground$.subscribe((color) => {
       this._scene.background = new Color(color);
@@ -103,11 +104,11 @@ export class BackgroundComponent implements OnInit {
     const delta = this._clock.getDelta();
 
     this._cubes.forEach(cube => {
-      cube.rotation.x += 0.001;
-      cube.rotation.y += 0.001;
+      cube.rotation.x += 0.002;
+      cube.rotation.y += 0.002;
     });
 
-    this._camera.rotation.y += 0.0005;
+    this._camera.rotation.y += 0.001;
 
     this._composer.render(delta)
   }

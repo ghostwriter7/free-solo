@@ -18,4 +18,8 @@ export class QuizItemComponent {
     this.isHidden = !this.isHidden;
   }
 
+  public quizItem() {
+    console.log('QUIZ ITEM');
+    return '';
+  }
 }

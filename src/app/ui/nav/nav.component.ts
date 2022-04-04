@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, NgZone, OnInit, Renderer2 } from '@angular/core';
 import { ThemeService, IconsService } from '../../core/services';
 import { Subject } from 'rxjs';
 
@@ -15,26 +15,29 @@ export class NavComponent implements OnInit {
   public isMenuActive = false;
   public toggleMenu$ = new Subject<boolean>();
 
-  @HostListener('window:resize', ['$event']) onWindowResize(e: Event) {
-    if ((e.target as Window).innerWidth > 600) {
-      this._renderer2.removeStyle(document.body, 'overflow-y');
-    }
-  }
-
   constructor(
     public iconsService: IconsService,
     public themeService: ThemeService,
-    private _renderer2: Renderer2,
+    private _renderer: Renderer2,
+    private _zone: NgZone
   ) {}
 
   ngOnInit(): void {
     this.toggleMenu$.subscribe({
       next: (state) => {
         if (window.innerWidth < 600) {
-          state ? this._renderer2.setStyle(document.body, 'overflow-y', 'hidden') :
-            this._renderer2.setStyle(document.body, 'overflow-y', 'initial');
+          state ? this._renderer.setStyle(document.body, 'overflow-y', 'hidden') :
+            this._renderer.setStyle(document.body, 'overflow-y', 'initial');
         }
       }
+    });
+
+    this._zone.runOutsideAngular(() => {
+      this._renderer.listen(window, 'resize', () => {
+        if (innerWidth > 600) {
+          this._renderer.removeStyle(document.body, 'overflow-y');
+        }
+      });
     });
   }
 
